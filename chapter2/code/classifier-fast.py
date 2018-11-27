@@ -5,7 +5,7 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 
 
-import cPickle
+import _pickle as cPickle
 import gzip
 
 def load(file_name):
@@ -78,10 +78,11 @@ TEST_DIR = "../test-mails"
 
 dictionary = make_Dictionary(TRAIN_DIR)
 
-print "reading and processing emails from file."
+print("reading and processing emails from file.")
 
 features_matrix, labels = extract_features(TRAIN_DIR)
 test_feature_matrix, test_labels = extract_features(TEST_DIR)
+
 
 #features_matrix = features_matrix[:len(features_matrix)/10]
 #labels = labels[:len(labels)/10]
@@ -89,11 +90,11 @@ test_feature_matrix, test_labels = extract_features(TEST_DIR)
 
 model = svm.SVC(kernel="rbf", C=100, gamma=0.001)
 
-print "Training model."
+print("Training model.")
 #train model
 model.fit(features_matrix, labels)
 
 predicted_labels = model.predict(test_feature_matrix)
 
-print "FINISHED classifying. accuracy score : "
-print accuracy_score(test_labels, predicted_labels)
+print("FINISHED classifying. accuracy score : ")
+print(accuracy_score(test_labels, predicted_labels))

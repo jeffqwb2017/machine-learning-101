@@ -1,9 +1,13 @@
+#https://medium.com/machine-learning-101/chapter-1-supervised-learning-and-naive-bayes-classification-part-2-coding-5966f25f1475
+#GassianNB explation http://blog.aylien.com/naive-bayes-for-dummies-a-simple-explanation/
 import os
 import numpy as np
 from collections import Counter
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 
+#how to use Counter object
+#https://pymotw.com/2/collections/counter.html
 
 def make_Dictionary(root_dir):
     all_words = []
@@ -11,18 +15,19 @@ def make_Dictionary(root_dir):
     for mail in emails:
         with open(mail) as m:
             for line in m:
-                words = line.split()
+                words = line.split() # default whitespace as sepeartor
                 all_words += words
     dictionary = Counter(all_words)
-    list_to_remove = dictionary.keys()
+    #list_to_remove = dictionary.keys()
 
-    for item in list_to_remove:
+    # del keyword can be used to delete variables, lists, or parts of a list etc.
+    for item in list(dictionary):
         if item.isalpha() == False:
             del dictionary[item]
         elif len(item) == 1:
-            del dictionary[item]
+            del dictionary[item] #we delete words of length 1 and that are not purely alphabetical.
     dictionary = dictionary.most_common(3000)
-
+    # we consider only most frequent 3000 words of dictionary from email
     return dictionary
 
 
@@ -60,18 +65,21 @@ TEST_DIR = "../test-mails"
 
 dictionary = make_Dictionary(TRAIN_DIR)
 
-print "reading and processing emails from file."
+print("reading and processing emails from file.")
 features_matrix, labels = extract_features(TRAIN_DIR)
 test_feature_matrix, test_labels = extract_features(TEST_DIR)
 
 
 model = GaussianNB()
 
-print "Training model."
+print("Training model.")
 #train model
 model.fit(features_matrix, labels)
 
 predicted_labels = model.predict(test_feature_matrix)
 
-print "FINISHED classifying. accuracy score : "
-print accuracy_score(test_labels, predicted_labels)
+print("FINISHED classifying. accuracy score : ")
+print(accuracy_score(test_labels, predicted_labels))
+
+#tensorflow solve Native Bayer problem
+#https://github.com/nicolov/naive_bayes_tensorflow/blob/master/tf_iris.py
