@@ -7,8 +7,8 @@ iris = datasets.load_iris()
 X = iris.data[:, :2]  # we only take the first two features. We could
                       # avoid this ugly slicing by using a two-dim dataset
 y = iris.target
-print X
-print y
+print(X)
+print(y)
 
 h = .02  # step size in the mesh
 
@@ -27,10 +27,10 @@ xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
 titles = ['SVC with linear kernel']
 
 
-print "------------------"
-print xx
-print "------------------"
-print xx.ravel()
+print("------------------")
+print(xx)
+print("------------------")
+print(xx.ravel())
 Z = svc.predict(np.c_[xx.ravel(), yy.ravel()])
 
 # Put the result into a color plot
@@ -51,7 +51,7 @@ plt.show()
 
 
 
-import cPickle
+import _pickle as cPickle
 import gzip
 
 def load(file_name):
